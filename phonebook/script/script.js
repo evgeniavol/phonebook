@@ -88,6 +88,8 @@ const data = [{
         table.classList.add('table', 'table-striped');
 
         const thead = document.createElement('thead');
+
+
         thead.insertAdjacentHTML('beforeend', `
             <tr>
                 <th class="delete">Удалить</th>
@@ -100,7 +102,6 @@ const data = [{
 
         table.append(thead, tbody);
         table.tbody = tbody;
-
         return table;
     }
 
@@ -173,7 +174,7 @@ const data = [{
         const logo = createLogo(title);
         const main = createMain();
         const footer = createFooter();
-const footerText = text(title);
+        const footerText = text(title);
         const buttonGroup = createButtonsGroup([{
                 className: 'btn btn-primary mr-3',
                 type: 'button',
@@ -197,6 +198,10 @@ const footerText = text(title);
 
         return {
             list: table.tbody,
+            logo,
+            btnAdd: buttonGroup.btns[0],
+            btnDel: buttonGroup.btns[1],
+            formOverlay: form.overlay,
         };
     };
 
@@ -205,8 +210,8 @@ const footerText = text(title);
         surname,
         phone
     }) => {
-
         const tr = document.createElement('tr');
+        tr.classList.add('contact');
         const tdDel = document.createElement('td');
         tdDel.classList.add('delete');
         const buttonDel = document.createElement('button');
@@ -220,28 +225,71 @@ const footerText = text(title);
         const phoneLink = document.createElement('a');
         phoneLink.href = `tel:${phone}`;
         phoneLink.textContent = phone;
-
+        tr.phoneLink = phoneLink;
         tr.append(tdDel, tdName, tdSurname, tdPhone);
 
         tdPhone.append(phoneLink);
         return tr;
     }
 
+
     const renderContacts = (elem, data) => {
         const allRow = data.map(createRow);
         elem.append(...allRow);
+        return allRow;
     };
-
+    const hoverRow = (allRow, logo) => {
+        const text = logo.textContent;
+        allRow.forEach(contact => {
+            contact.addEventListener('mouseenter', () => {
+                logo.textContent = contact.phoneLink.textContent;
+            });
+            contact.addEventListener('mouseleave', () => {
+                logo.textContent = text;
+            });
+        });
+    };
     const init = (selectorApp, title) => {
         const app = document.querySelector(selectorApp);
         const phoneBook = renderPhoneBook(app, title);
 
         const {
-            list
+            list,
+            logo,
+            btnAdd,
+            formOverlay,
+            btnDel
         } = phoneBook;
-        renderContacts(list, data);
+
         //Функционал
-    }
+        const allRow = renderContacts(list, data);
+
+        hoverRow(allRow, logo);
+
+        btnAdd.addEventListener('click', () => {
+            formOverlay.classList.add('is-visible');
+        });
+        formOverlay.addEventListener('click', e => {
+            const target = e.target;
+            if (target === formOverlay || target.classList.contains('close')) {
+                formOverlay.classList.remove('is-visible');
+            }
+        });
+
+        btnDel.addEventListener('click', () => {
+            document.querySelectorAll('.delete').forEach(del => {
+                del.classList.toggle('is-visible');
+            })
+        });
+
+        list.addEventListener('click', e => {
+            const target = e.target;
+            if (target.closest('.del-icon')) {
+                target.closest('.contact').remove();
+            }
+        });
+
+    };
 
     window.phoneBookInit = init;
 }
