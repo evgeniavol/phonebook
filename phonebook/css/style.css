@@ -130,3 +130,16 @@ body {
   color: #fff;
   text-align: center;
 }
+
+.btn-1 {
+  background-color: transparent;
+  border: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: block;
+  width: 20px;
+  height: 20px;
+}
+.edt-row {
+  background-image: url('../img/edit.svg');
+}
