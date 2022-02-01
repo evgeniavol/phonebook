@@ -9,6 +9,7 @@ import {
   formControl
 } from './modules/controls.js';
 
+import {getContactData} from './modules/storageContacts.js';
 {
   const init = (selectorApp, title) => {
     const app = document.querySelector(selectorApp);
@@ -27,7 +28,6 @@ import {
     //Функционал
     
     const data = getContactData();
-    import {getContactData} from './modules/storageContacts.js';
     renderContacts(list, data);
     
     const {
