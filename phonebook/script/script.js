@@ -5,16 +5,14 @@ import {
 
 import {
   modalControl,
-    deleteControl,
-    addContactPage,
-    formControl
+  deleteControl,
+  formControl
 } from './modules/controls.js';
 
-import {getContactData} from './storageContacts.js';
 {
   const init = (selectorApp, title) => {
     const app = document.querySelector(selectorApp);
-       const {
+    const {
       list,
       logo,
       btnAdd,
@@ -27,12 +25,15 @@ import {getContactData} from './storageContacts.js';
     );
 
     //Функционал
-    renderContacts(list, data);
+    
     const data = getContactData();
+    import {getContactData} from './modules/storageContacts.js';
+    renderContacts(list, data);
+    
     const {
       closeModal
     } = modalControl(btnAdd, formOverlay);
-
+    
     deleteControl(btnDel, list);
     formControl(form, list, closeModal);
   };
