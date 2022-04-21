@@ -1,15 +1,9 @@
-import {
-  renderPhoneBook,
-  renderContacts
-} from './modules/renders.js';
+import {renderPhoneBook, renderContacts} from './script/renders';
+import {modalControl, deleteControl, formControl} from './script/controls';
+import {getContactData} from './script/storageContacts';
 
-import {
-  modalControl,
-  deleteControl,
-  formControl
-} from './modules/controls.js';
+import './scss/index.scss';
 
-import {getContactData} from './modules/storageContacts.js';
 {
   const init = (selectorApp, title) => {
     const app = document.querySelector(selectorApp);
@@ -24,8 +18,6 @@ import {getContactData} from './modules/storageContacts.js';
       app,
       title
     );
-
-    //Функционал
     
     const data = getContactData();
     renderContacts(list, data);

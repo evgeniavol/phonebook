@@ -3,11 +3,11 @@ import {
   setContactData,
   addContactData,
   removeContactData
-} from './storageContacts.js';
+} from './storageContacts';
 
 import {
   createRow
-} from './createElems.js';
+} from './createElems.mjs';
 
 export const modalControl = (btnAdd, formOverlay) => {
   const openModal = () => {
